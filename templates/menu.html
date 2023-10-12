@@ -1,0 +1,6 @@
+{% load menu_tags %}
+
+<div class="menu tree_menu">
+    <span class="menu_title">{{ menu.title }}</span>
+    {% get_children menu_items menu %}
+</div>

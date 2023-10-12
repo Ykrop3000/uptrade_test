@@ -1,0 +1,17 @@
+{% load menu_tags %}
+{% if level >= 2 and children %}
+<span class="menu_indicator"></span>
+{% endif %}
+<ul>
+    {% for item in children %}
+    <li class="menu_item {% is_active_menu_item item.get_url %}" data-level="{{level}}">
+        <span class="menu_item_title ">
+            <a href="{{ item.get_url }}">
+            {{ item.title }}
+            </a>
+        </span>
+        {% get_children menu_items item level %}
+
+    </li>
+    {% endfor %}
+</ul>

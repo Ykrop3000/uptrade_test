@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UpTrade test</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+        body{
+            background-color: #99DD99;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+        }
+        ul, .menu {
+          list-style-type: none;
+        }
+        .menu {
+          margin: 0;
+          padding: 0;
+          padding-bottom: 10px;
+          max-width: 500px;
+        }
+        .menu > ul {
+            margin: 0;
+        }
+        .menu_item > ul {
+          display: none;
+        }
+        .menu ul, .menu li{
+            padding: 0;
+        }
+        .menu_item.active > ul{
+          display: block;
+        }
+        .menu_item {
+          position: relative;
+          cursor: pointer;
+          color: white;
+          padding: 15px;
+        }
+        .menu_indicator::before {
+          content: "\25B6";
+          color: black;
+          margin-right: 6px;
+          position: absolute;
+          top: 14px;
+          left: 10px;
+        }
+        .active >  .menu_indicator::before{
+           transform: rotate(90deg);
+        }
+        .menu_item_title{
+          padding: 5px;
+          font-size: 30px;
+          background-color: #558855;
+          min-height: 34px;
+          display: block;
+          width: 100%;
+        }
+        .menu_title{
+          font-weight: bold;
+          padding: 5px;
+          font-size: 30px;
+          color: white;
+          width: 100%;
+          background-color: #558855;
+          min-height: 34px;
+          display: block;
+        }
+        .menu_item_title a{
+          font-size: 30px;
+          color: white;
+          outline: none;
+          text-decoration: none;
+          padding-left: 30px;
+        }
+        .menu_item[data-level="2"] .menu_item_title{
+          background-color: #699c69;
+        }
+        .menu_item[data-level="3"] .menu_item_title{
+          background-color: #8ab28a;
+        }
+
+        .menu_item_title:hover {
+          background-color: #338833 !important;
+        }
+    </style>
+</head>
+<body>
+{% load menu_tags %}
+{% draw_menu 'main_menu' %}
+{% draw_menu 'test' %}
+
+{% block content %}{% endblock %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggler = document.querySelectorAll(".tree_menu .menu_item_title");
+
+
+        toggler.forEach(element => {
+            element.parentElement.addEventListener("click", function(e) {
+                console.log(e.target, this)
+                if (e.target.parentElement.dataset.level == this.dataset.level){
+                    this.classList.toggle("active");
+                }
+            });
+        })
+        const active = document.querySelectorAll(".menu_item.active");
+        active.forEach(element => {
+            const parent = element.parentElement.closest('.menu_item')
+            if (parent){
+                parent.classList.toggle("active");
+            }
+        })
+
+    });
+
+</script>
+
+</body>
+</html>
