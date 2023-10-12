@@ -8,7 +8,7 @@ from menu.models import MenuItem
 register = template.Library()
 
 
-@register.inclusion_tag('menu.html')
+@register.inclusion_tag('menu/menu.html')
 def draw_menu(menu_name: str):
     menu_items = MenuItem.objects.all()
     menu = [i for i in menu_items if i.title == menu_name][0]
@@ -18,7 +18,7 @@ def draw_menu(menu_name: str):
     }
 
 
-@register.inclusion_tag('sub_menu.html', takes_context=True)
+@register.inclusion_tag('menu/sub_menu.html', takes_context=True)
 def get_children(context, items: list, parent, level:int=0):
     result = []
     for item in items:
